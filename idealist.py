@@ -137,16 +137,16 @@ class idea_list:
 		self.master = {item: v for item, v in self.master.iteritems() 
 					   if v.status != status}
 
-	def save(self):
-		f = open('ideas.ida','w+')
+	def save(self, filename):
+		f = open(filename,'w+')
 		for i in self.master:
 			f.write(self.master[i].export()+"\n")
 		f.close()
 
-	def load(self):
+	def load(self, filename):
 		settingre ='\s*=\s*\{(?P<variable>[^\}]*)'
 		settingrevect ='\s*=\s*\{\s*\[(?P<variable>[^\]]*)'
-		f = open('ideas.ida','r')
+		f = open(filename,'r')
 		for line in f:
 
 			idsearch = re.search("id" + settingre, line)
