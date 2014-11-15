@@ -2,6 +2,19 @@
 
 import os
 import re
+import shutil
+
+def move_folder(root_src_dir, root_dst_dir):
+	for src_dir, dirs, files in os.walk(root_src_dir):
+	    dst_dir = src_dir.replace(root_src_dir, root_dst_dir)
+	    if not os.path.exists(dst_dir):
+	        os.mkdir(dst_dir)
+	    for file_ in files:
+	        src_file = os.path.join(src_dir, file_)
+	        dst_file = os.path.join(dst_dir, file_)
+	        if os.path.exists(dst_file):
+	            os.remove(dst_file)
+	        shutil.move(src_file, dst_dir)
 
 class idea:
 	def __init__(self, id):
@@ -30,7 +43,7 @@ class idea:
 	def wipe_notes(self):
 		self.bibliography = []
 
-	def change_status(self, status):
+	def change_status(self, status, remove = True):
 		self.status = status
 
 	def change_description(self, desc):
@@ -87,6 +100,12 @@ class idea:
 			print "{0:3}. {1}".format(i+1, self.notes[i])
 		print "\n\n"
 
+	def make_folder(self):
+		if not os.path.exists(self.status):
+			os.makedirs(self.status)
+		if not os.path.exist(self.status + "/" + self.id):
+			os.makedirs(self.status + "/" + self.id)
+
 class idea_list:
 	def __init__(self):
 		self.master =  {}
@@ -118,8 +137,21 @@ class idea_list:
 	def wipe_notes(self, name):
 		self[name].wipe_notes()
 
-	def change_status(self, name, status):
+	def change_status(self, name, status, remove = True):
+		if os.path.exists(self.status + "/" + self.id):
+			if os.path.exists(status):
+				move_folder(self.status + "/" + self.id, status + "/" + self.id)
+				shutil.rmtree(self.status + "/" + self.id)
+			else:
+				if remove:
+					shutil.rmtree(self.status + "/" + self.id)
+				else:
+					os.mkdir(status)
+					move_folder(self.status + "/" + self.id, status + "/" + self.id)
+					shutil.rmtree(self.status + "/" + self.id)					
+		
 		self[name].change_status(status)
+
 
 	def change_description(self, name, desc):
 		self[name].change_desctiption(desc)
@@ -234,6 +266,15 @@ class idea_list:
 			x.notes = noteline
 
 			self.add_idea(x)
+
+	def make_folders(status = ""):
+		if status == "":
+			temp = self.master
+		else:
+			temp = {item: v for item, v in self.master.iteritems() 
+					   if v.status == status}
+		for item in temp:
+			make_folder(temp)
 
 	def print_long(self, filename):
 		f = open(filename,'w+')
