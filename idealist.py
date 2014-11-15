@@ -1,6 +1,7 @@
 # Code to implement idea list for dissertations, papers etc.
 
 import os
+import re
 
 class idea:
 	def __init__(self, id):
