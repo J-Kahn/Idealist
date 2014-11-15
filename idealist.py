@@ -44,6 +44,17 @@ class idea:
 		self.bibliography = []
 
 	def change_status(self, status, remove = True):
+		if os.path.exists(self.status + "/" + self.id):
+			if os.path.exists(status):
+				move_folder(self.status + "/" + self.id, status + "/" + self.id)
+				shutil.rmtree(self.status + "/" + self.id)
+			else:
+				if remove:
+					shutil.rmtree(self.status + "/" + self.id)
+				else:
+					os.mkdir(status)
+					move_folder(self.status + "/" + self.id, status + "/" + self.id)
+					shutil.rmtree(self.status + "/" + self.id)	
 		self.status = status
 
 	def change_description(self, desc):
@@ -103,8 +114,10 @@ class idea:
 	def make_folder(self):
 		if not os.path.exists(self.status):
 			os.makedirs(self.status)
-		if not os.path.exist(self.status + "/" + self.id):
+		if not os.path.exists(self.status + "/" + self.id):
 			os.makedirs(self.status + "/" + self.id)
+		f = open(self.status + "/" + self.id + "/" + "summary.txt","w+")
+		f.write(self.string_full())
 
 class idea_list:
 	def __init__(self):
@@ -137,21 +150,8 @@ class idea_list:
 	def wipe_notes(self, name):
 		self[name].wipe_notes()
 
-	def change_status(self, name, status, remove = True):
-		if os.path.exists(self.status + "/" + self.id):
-			if os.path.exists(status):
-				move_folder(self.status + "/" + self.id, status + "/" + self.id)
-				shutil.rmtree(self.status + "/" + self.id)
-			else:
-				if remove:
-					shutil.rmtree(self.status + "/" + self.id)
-				else:
-					os.mkdir(status)
-					move_folder(self.status + "/" + self.id, status + "/" + self.id)
-					shutil.rmtree(self.status + "/" + self.id)					
-		
+	def change_status(self, name, status, remove = True):	
 		self[name].change_status(status)
-
 
 	def change_description(self, name, desc):
 		self[name].change_desctiption(desc)
@@ -210,9 +210,13 @@ class idea_list:
 
 		for i in range(0, len(temp)):
 			nm = listtemp[i]
-			temp[nm].print_idea(i+1, l1, l2, l3, l4)		
+			temp[nm].print_idea(i+1, l1, l2, l3, l4)	
 	
-	def eliminate_status(self, status):
+	def eliminate_status(self, status, remove = True):
+
+		if remove:
+			if os.path.exists(status):
+				shutil.rmtree(status)
 
 		self.master = {item: v for item, v in self.master.iteritems() 
 					   if v.status != status}
@@ -267,14 +271,14 @@ class idea_list:
 
 			self.add_idea(x)
 
-	def make_folders(status = ""):
+	def make_folders(self, status = ""):
 		if status == "":
 			temp = self.master
 		else:
 			temp = {item: v for item, v in self.master.iteritems() 
 					   if v.status == status}
 		for item in temp:
-			make_folder(temp)
+			temp[item].make_folder()
 
 	def print_long(self, filename):
 		f = open(filename,'w+')
