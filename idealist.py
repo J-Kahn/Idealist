@@ -234,3 +234,9 @@ class idea_list:
 			x.notes = noteline
 
 			self.add_idea(x)
+
+	def print_long(self, filename):
+		f = open(filename,'w+')
+		for i in self.master:
+			f.write(self.master[i].string_full() + "\n\n\n\n")
+		f.close()

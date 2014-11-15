@@ -32,3 +32,5 @@ newerlist["protestantism"].print_bib()
 newerlist["protestantism"].print_notes()
 
 newerlist.print_ifstatus("new")
+
+newerlist.print_long("longlist.txt")
