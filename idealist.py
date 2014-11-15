@@ -12,6 +12,12 @@ class idea:
 		self.bibliography = []
 		self.status = "new"
 
+	def __repr__(self):
+	 	return self.string_part()
+
+	def __str__(self):
+		return self.string_full()
+
 	def add_note(self, note):
 		self.notes.append(note)
 
@@ -39,6 +45,20 @@ class idea:
 		return "{0:{l1}})   {1:{l2}}    {2:{l3}}   {3:{l4}}".format(num, self.name, self.id,
 															self.status, l1=l1, l2=l2, 
 															l3=l3, l4=l4)
+	def string_part(self):
+		ret= "IDEA:   Name: {0}    Tag: {1}  Status: {2}".format(self.name, self.id, self.status)
+		return ret
+
+	def string_full(self):
+		ret= "\nIDEA:\n=====\nName: {0}    Tag: {1}  Status: {2}".format(self.name, self.id, self.status)
+		ret= ret+ "\n\nBIBLIOGRAPHY:\n=============\n"
+		for i in range(0, len(self.bibliography)):
+			ret= ret+ "{0:3}. {1}".format(i+1, self.bibliography[i]) +"\n"
+		ret= ret+  "\n\nNOTES:\n======\n"	
+		for i in range(0, len(self.notes)):
+			ret= ret+ "{0:3}. {1}".format(i+1, self.notes[i]) + "\n"
+		ret= ret+ "\n\n"
+		return ret
 
 	def export(self):
 		char_bib =  " && ".join(self.bibliography)
@@ -61,8 +81,8 @@ class idea:
 		print "\n\n"
 		print "Idea: {0}, Tag: {1}".format(self.name, self.id)
 		print "\n"
-		print "NOTES"
-		print "====="
+		print "NOTES:"
+		print "======"
 		for i in range(0, len(self.notes)):
 			print "{0:3}. {1}".format(i+1, self.notes[i])
 		print "\n\n"
@@ -83,10 +103,37 @@ class idea_list:
 	def add_idea(self, proj):
 		self.master[proj.id] = proj
 
+	def new_idea(self, id):
+		self.master[id] = idea(id)
+
+	def add_note(self, name, note):
+		self[name].add_note(note)
+
+	def wipe_notes(self, name):
+		self[name].wipe_notes()
+
+	def add_source(self, name, source):
+		self[name].add_source(source)
+
+	def wipe_notes(self, name):
+		self[name].wipe_notes()
+
+	def change_status(self, name, status):
+		self[name].change_status(status)
+
+	def change_description(self, name, desc):
+		self[name].change_desctiption(desc)
+
 	def rename(self, name, newname):
 		self.master[newname] = self.master[name]
 		self.master[newname].id = newname
 		del self.master[name]
+
+	def add_note(self, name, note):
+		self[name].add_note(note)
+
+	def add_source(self, name, source):
+		self[name].add_source(source)
 
 	def print_full(self):
 

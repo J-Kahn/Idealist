@@ -10,6 +10,8 @@ x1.description = "Depressing puritan ethics encourage harder work -> higher grow
 x1.add_source("Max Weber may have written something about this...")
 
 newlist.add_idea(x1)
+newlist["protestantism"]
+print newlist["protestantism"]
 
 x1 = ida.idea("badnewsbears")
 x1.name = "How bad can the Bears season get?"
