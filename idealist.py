@@ -75,6 +75,7 @@ class idea:
 
 	def string_full(self):
 		ret= "\nIDEA:\n=====\nName: {0}    Tag: {1}  Status: {2}".format(self.name, self.id, self.status)
+		ret= ret+"\n" +(self.description)
 		ret= ret+ "\n\nBIBLIOGRAPHY:\n=============\n"
 		for i in range(0, len(self.bibliography)):
 			ret= ret+ "{0:3}. {1}".format(i+1, self.bibliography[i]) +"\n"
