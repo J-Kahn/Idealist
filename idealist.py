@@ -61,9 +61,9 @@ class idea:
 		self.description = desc
 
 	def print_idea(self, num, l1, l2, l3, l4):
-		print "{0:{l1}})   {1:{l2}}    {2:{l3}}   {3:{l4}}".format(num, self.name, self.id,
+		print("{0:{l1}})   {1:{l2}}    {2:{l3}}   {3:{l4}}".format(num, self.name, self.id,
 															self.status, l1=l1, l2=l2, 
-															l3=l3, l4=l4)
+															l3=l3, l4=l4))
 
 	def string_rep(self, num, l1, l2, l3, l4):
 		return "{0:{l1}})   {1:{l2}}    {2:{l3}}   {3:{l4}}".format(num, self.name, self.id,
@@ -92,25 +92,25 @@ class idea:
 															self.status, char_notes, char_bib)
 
 	def print_bib(self):
-		print "\n\n"
-		print "Idea: {0}, Tag: {1}".format(self.name, self.id)
-		print "\n"
-		print "BIBLIOGRAPHY:"
-		print "============="
+		print("\n\n")
+		print("Idea: {0}, Tag: {1}".format(self.name, self.id))
+		print("\n")
+		print("BIBLIOGRAPHY:")
+		print("=============")
 		for i in range(0, len(self.bibliography)):
-			print "{0:3}. {1}".format(i+1, self.bibliography[i])
-		print "\n\n"
+			print("{0:3}. {1}".format(i+1, self.bibliography[i]))
+		print("\n\n")
 
 
 	def print_notes(self):
-		print "\n\n"
-		print "Idea: {0}, Tag: {1}".format(self.name, self.id)
-		print "\n"
-		print "NOTES:"
-		print "======"
+		print("\n\n")
+		print("Idea: {0}, Tag: {1}".format(self.name, self.id))
+		print("\n")
+		print("NOTES:")
+		print("======")
 		for i in range(0, len(self.notes)):
-			print "{0:3}. {1}".format(i+1, self.notes[i])
-		print "\n\n"
+			print("{0:3}. {1}".format(i+1, self.notes[i]))
+		print("\n\n")
 
 	def make_folder(self):
 		if not os.path.exists(self.status):
