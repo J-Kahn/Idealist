@@ -40,4 +40,4 @@ newerlist["protestantism"].print_notes()
 
 newerlist.print_ifstatus("new")
 ```
-*Update: 8/9/19 - * I've added a simple script, `add_idea.py` to make adding an idea to an ida file as easy as possible.
+**Update: 8/9/19 - ** I've added a simple script, `add_idea.py` to make adding an idea to an ida file as easy as possible.
