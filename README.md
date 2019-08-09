@@ -1,5 +1,3 @@
-See [this post](http://goodmeasure/j-kahn.com/idealist.html).
-
 Over time, I've gotten into the habit of keeping track of ideas for academic papers, projects, and ultimately the twinkle in my eye that is my dissertation. The problem is, a simple list isn't really helping me. I need to keep track of the idea, whether or not I've rejected it, any progress I've made or thoughts I've had, and any relevant papers associated with the idea. Unsatisfied with the available alternatives, I've written up a super simple python script to track these ideas, available here. (The name "idealist" was actually unintentional)
 
 There are two classes: `idea`s and `idea_list`s. Ideas have an id (which they'll be indexed by in their list), a name, a description, a status, notes and bibliography. All of these are simple strings except for the notes and bibliography, which are lists of strings. Ideas are initialized with their id, and the rest of their aspects can be manipulated through a set of functions I have included or just through manipulating them directly.
@@ -42,4 +40,4 @@ newerlist["protestantism"].print_notes()
 
 newerlist.print_ifstatus("new")
 ```
-
+*Update: 8/9/19 - * I've added a simple script, `add_idea.py` to make adding an idea to an ida file as easy as possible.
